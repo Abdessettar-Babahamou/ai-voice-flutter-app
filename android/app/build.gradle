@@ -38,7 +38,7 @@ android {
         applicationId = "com.example.myapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdk = flutter.minSdkVersion
+        minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
@@ -52,6 +52,10 @@ android {
         }
     }
 }
+dependencies {
+  implementation "androidx.activity:activity:1.6.0-alpha05"
+}
+
 
 flutter {
     source = "../.."

@@ -1,11 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myapp/constants/app_color.dart';
+import 'package:myapp/view/screens/auth/get_started.dart';
 import 'package:myapp/view/widgets/logo.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _SplashScreenState createState() => _SplashScreenState();
 }
 
@@ -26,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
 
     Timer(const Duration(seconds: 3), () {
-      // Navigator.pushReplacementNamed(context, '/login');
+      Get.to(() => const GetStartedScreen());
     });
   }
 
@@ -41,12 +46,8 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       backgroundColor: AppColor.primaryBgColor,
       body: Center(
-        child: ScaleTransition(
-            scale: _animation,
-            child: const Logo()),
+        child: ScaleTransition(scale: _animation, child: const Logo()),
       ),
     );
   }
 }
-
-

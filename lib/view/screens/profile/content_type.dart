@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/constants/app_color.dart';
+import 'package:myapp/constants/constants.dart';
 import 'package:myapp/utils/responsive_siwe.dart';
+import 'package:myapp/view/screens/profile/widgets/title_and_description.dart';
 import 'package:myapp/view/widgets/radio_card.dart';
 
 class ContentType extends StatefulWidget {
-  const ContentType({Key? key}) : super(key: key);
+  const ContentType({super.key});
 
   @override
   State<ContentType> createState() => _TeamSizeState();
@@ -12,30 +13,6 @@ class ContentType extends StatefulWidget {
 
 class _TeamSizeState extends State<ContentType> {
   int activeValue = 0;
-
-  List tesmSizeItem = [
-    {
-      "title": "Marketing & Ads",
-    },
-    {
-      "title": "YouTube Videos & Shorts",
-    },
-    {
-      "title": "Education",
-    },
-    {
-      "title": "Social Media",
-    },
-    {
-      "title": "Podcasts",
-    },
-    {
-      "title": "Personal Only",
-    },
-      {
-      "title": "Other",
-    },
-  ];
 
   void handleOnclik(int? value) {
     setState(() {
@@ -52,20 +29,25 @@ class _TeamSizeState extends State<ContentType> {
             vertical: getResponsiveWidth(20),
             horizontal: getResponsiveWidth(5)),
         child: Column(
-          children: List.generate(
-            tesmSizeItem.length,
-            (index) {
-              return RadioCaed(
-                  title: tesmSizeItem[index]["title"],
-                  value: index,
-                  onclick: () => handleOnclik(index),
-                  activeValue: activeValue);
-            },
-          ),
+          children: [
+            TitleAndDescription(
+              title: sectionTitle[2]['title'],
+              description: sectionTitle[2]['description'],
+            ),
+            SizedBox(height: getResponsiveHeight(20)),
+            ...List.generate(
+              contentType.length,
+              (index) {
+                return RadioCaed(
+                    title: contentType[index]["title"],
+                    value: index,
+                    onclick: () => handleOnclik(index),
+                    activeValue: activeValue);
+              },
+            )
+          ],
         ),
       ),
     );
   }
 }
-
-

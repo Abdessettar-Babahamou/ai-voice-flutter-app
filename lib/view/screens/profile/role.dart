@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:myapp/constants/app_color.dart';
+import 'package:myapp/constants/constants.dart';
 import 'package:myapp/utils/responsive_siwe.dart';
+import 'package:myapp/view/screens/profile/widgets/title_and_description.dart';
 
 class ProfileRole extends StatefulWidget {
-  ProfileRole({Key? key}) : super(key: key);
+  const ProfileRole({super.key});
 
   @override
   State<ProfileRole> createState() => _ProfileRoleState();
@@ -14,34 +17,42 @@ class _ProfileRoleState extends State<ProfileRole> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-          vertical: getResponsiveHeight(20), horizontal: getResponsiveWidth(5)),
-      height: double.infinity,
-      child: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        children: List.generate(4, (index) {
-          return RoleCard(
-            onClick: () {
-              setState(() {
-                activeIndex = index;
-              });
-            }, activeIndex: activeIndex, index: index,
-          );
-        }),
+    SizeResponsive.init(context);
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          TitleAndDescription(
+            title: sectionTitle[0]['title'],
+            description: sectionTitle[0]['description'],
+          ),
+          SizedBox(height: getResponsiveHeight(20)),
+          Wrap(
+            children: List.generate(4, (index) {
+              return RoleCard(
+                onClick: () {
+                  setState(() {
+                    activeIndex = index;
+                  });
+                },
+                activeIndex: activeIndex,
+                index: index,
+              );
+            }),
+          )
+        ],
       ),
     );
   }
 }
 
 class RoleCard extends StatelessWidget {
-    RoleCard({
+  const RoleCard({
     super.key,
-    required this.onClick,required this.activeIndex,required this.index,
+    required this.onClick,
+    required this.activeIndex,
+    required this.index,
   });
-  int activeIndex, index;
+  final int activeIndex, index;
   final VoidCallback onClick;
 
   @override
@@ -49,6 +60,9 @@ class RoleCard extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
+        width: MediaQuery.of(context).size.width / 2 - getResponsiveWidth(35),
+        margin: const EdgeInsets.all(5),
+        padding: EdgeInsets.all(getResponsiveWidth(10)),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: AppColor.btnInputColor,
@@ -61,8 +75,12 @@ class RoleCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
+              backgroundColor: Colors.transparent,
               radius: 30,
-              child: Image.asset("assets/images/Profile.png"),
+              child: Image.asset(
+                "assets/images/Profile.png",
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(
               height: getResponsiveHeight(10),
@@ -73,7 +91,9 @@ class RoleCard extends StatelessWidget {
             )
           ],
         ),
-      ),
+      ).animate().fade(
+          duration: const Duration(milliseconds: 300),
+          delay: Duration(milliseconds: 300 * index)),
     );
   }
 }

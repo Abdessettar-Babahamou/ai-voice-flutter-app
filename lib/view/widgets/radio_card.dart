@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:myapp/constants/app_color.dart';
 import 'package:myapp/utils/responsive_siwe.dart';
 
@@ -21,7 +22,9 @@ class RadioCaed extends StatelessWidget {
     return GestureDetector(
       onTap: onclick,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        padding: EdgeInsets.symmetric(
+            horizontal: getResponsiveWidth(10),
+            vertical: getResponsiveWidth(4)),
         margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
           color: AppColor.btnInputColor,
@@ -42,7 +45,9 @@ class RadioCaed extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      ).animate().fade(
+          duration: const Duration(milliseconds: 300),
+          delay: Duration(milliseconds: 300 * value)),
     );
   }
 }
